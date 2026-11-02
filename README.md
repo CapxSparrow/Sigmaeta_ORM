@@ -1,2 +1,2 @@
 # Sigmaeta_ORM
-ORM ADVANTAGE
+Operations research for manager ADVANTAGE
