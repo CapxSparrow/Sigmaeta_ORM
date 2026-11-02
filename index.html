@@ -1337,7 +1337,7 @@ details.more p { margin: 0; }
 <footer class="se-foot">
   <div class="wrap">
     <p style="margin:0"><b>SigmaEta Advantage Series for ORM</b> · made by SigmaEta, the Operations Club of IIM Trichy.</p>
-    <p style="margin:0">Made by the SigmaEta Operations club for the ORM midterm. Every answer was checked by two independent programs. Your progress is saved in this browser only. <button type="button" class="linkbtn" id="reset">Reset my progress</button></p>
+    <p style="margin:0">Made by the SigmaEta Operations club for the ORM midterm. Every answer was checked by two independent programs. Your progress is saved in this browser only. Visits are counted anonymously, without cookies. <button type="button" class="linkbtn" id="reset">Reset my progress</button></p>
   </div>
 </footer>
 
@@ -9482,5 +9482,33 @@ boot();
 })();
 </script>
 
+<script>
+/* visit counter (GoatCounter: anonymous, no cookies). Routes live in the hash, so each page change is sent by hand. */
+(function () {
+  if (location.protocol !== 'https:' && location.protocol !== 'http:') return;
+  var first = true, dead = false, queue = [];
+  function route() {
+    var r = (location.hash || '').replace(/^#/, '') || 'home';
+    return '/' + r.replace(/^lab1/, 'learning').replace(/^lab2/, 'practice');
+  }
+  function send() {
+    if (dead || location.hash === '#toggle-goatcounter') return;      // the owner's switch for not counting their own visits is not a page
+    var v = { path: route(), title: document.title };
+    if (!first) v.referrer = '';
+    first = false;
+    if (window.goatcounter && window.goatcounter.count) window.goatcounter.count(v); else queue.push(v);
+  }
+  window.goatcounter = { no_onload: true };
+  var s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://gc.zgo.at/count.js';
+  s.setAttribute('data-goatcounter', 'https://capxsparrow.goatcounter.com/count');
+  s.onload = function () { while (queue.length && window.goatcounter && window.goatcounter.count) window.goatcounter.count(queue.shift()); };
+  s.onerror = function () { dead = true; queue.length = 0; };
+  document.head.appendChild(s);
+  send();
+  window.addEventListener('hashchange', send);
+})();
+</script>
 </body>
 </html>
