@@ -278,6 +278,7 @@ h1, h2, h3 { font-family: var(--f-head); margin: 0; text-wrap: balance; }
 .ol-n { width: 26px; height: 26px; display: grid; place-items: center; border-radius: 8px; background: var(--well); border: 1px solid var(--line); font: 700 13px var(--f-head); color: var(--ink-2); }
 .ol-list a[aria-current="page"] .ol-n { background: rgba(0, 0, 0, .14); border-color: transparent; color: var(--gold-ink); }
 .ol-list a.done .ol-n { background: var(--good-wash); border-color: transparent; color: var(--good); }
+.ol-n svg { width: 15px; height: 15px; }
 .ol-list a.done .ol-n svg { width: 15px; height: 15px; }
 .ol-sep { margin: 14px 0 0; padding-top: 12px; border-top: 1px solid var(--line); display: grid; gap: 2px; }
 
@@ -301,6 +302,7 @@ h1, h2, h3 { font-family: var(--f-head); margin: 0; text-wrap: balance; }
 .lcard.next { border-color: var(--gold); box-shadow: 0 0 0 3px var(--accent-wash); }
 .lcard .num { width: 52px; height: 44px; display: grid; place-items: center; background: var(--gold); color: var(--gold-ink); font: 800 22px var(--f-head); clip-path: polygon(14% 0, 100% 0, 86% 100%, 0 100%); }
 .lcard.done .num { background: var(--good); color: var(--on-good); }
+.lcard .num svg { width: 22px; height: 22px; }
 .lcard.done .num svg { width: 22px; height: 22px; }
 .lcard h3 { font: 700 19px/1.2 var(--f-head); }
 .lcard p { margin: 2px 0 0; color: var(--ink-2); font-size: 15px; line-height: 1.4; }
@@ -939,7 +941,7 @@ details.more p { margin: 0; }
 /* the Answer Report tables have only one to four columns, so they never need to scroll sideways */
 .l1 .tbl.rep.rep-ans-obj, .l1 .tbl.rep.rep-ans-var, .l1 .tbl.rep.rep-ans-con { min-width: 0; }
 
-/* ============ LP Formulation Practice (Lab 2). The build scopes every rule below under .l2 ============
+/* ============ Practice Module (and the 4-move method and drills pages of the Learning Module). The build scopes every rule below under .l2 ============
    Colours, fonts and shadows all come from the series tokens; nothing here defines a colour of its own. */
 :root { --rail-h: calc(var(--hdr-h) + 3px); }
 
@@ -1121,6 +1123,12 @@ details.more p { margin: 0; }
 .l2 .pstat svg { width: 14px; height: 14px; }
 .l2 .pstat.solved { color: var(--good); }
 .l2 .pstat.revealed { color: var(--warn); }
+/* a solved problem stands out: green card, a filled Solved pill; a problem whose answer was shown has an amber pill */
+.l2 .pcard.solved { background: linear-gradient(var(--good-wash), var(--good-wash)), var(--card); border-color: var(--good); }
+.l2 .pcard.peeked { border-color: var(--gold-deep); }
+.l2 .pcard .pstat.solved, .l2 .pcard .pstat.revealed { padding: 3px 10px 3px 7px; border-radius: 999px; }
+.l2 .pcard .pstat.solved { background: var(--good); color: var(--on-good); }
+.l2 .pcard .pstat.revealed { background: var(--warn-wash); color: var(--ink); }
 .l2 .empty { padding: 18px; text-align: center; color: var(--ink-3); border: 1.5px dashed var(--axis); border-radius: 14px; }
 
 /* ---------- problem page: story column ---------- */
@@ -1202,8 +1210,10 @@ details.more p { margin: 0; }
 /* ---------- the answer view ---------- */
 .l2 .sol { display: grid; gap: 16px; }
 .l2 .solhead { display: grid; gap: 4px; }
-.l2 .solhead .big { font: 800 36px/1 var(--f-head); }
-.l2 .solhead .lb2 { font-size: 14px; color: var(--ink-2); }
+.l2 .solhead .ttl { margin: 0; }
+.l2 .bestval { display: grid; gap: 4px; }
+.l2 .bestval .big { font: 800 36px/1 var(--f-head); }
+.l2 .bestval .lb2 { font-size: 14px; color: var(--ink-2); }
 .l2 .refmodel { display: grid; gap: 8px; }
 .l2 .refmodel .blk { padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; display: grid; gap: 4px; background: var(--card); }
 .l2 .refmodel .bt { font: 700 11px var(--f-sans); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
@@ -1243,12 +1253,15 @@ details.more p { margin: 0; }
 .l2 .psearch:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; border-color: var(--gold-deep); }
 
 /* ---------- plan before you type ---------- */
-.l2 details.plan { padding: 0; }
-.l2 details.plan > summary { list-style: none; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 12px 16px; cursor: pointer; min-height: 52px; }
-.l2 details.plan > summary::-webkit-details-marker { display: none; }
-.l2 details.plan > summary .ttl { margin: 0; }
-.l2 details.plan > summary::after, .l2 details.pat-guide > summary::after { content: ""; flex: none; width: 8px; height: 8px; margin: -3px 2px 0 auto; border-right: 2px solid var(--ink-3); border-bottom: 2px solid var(--ink-3); transform: rotate(45deg); transition: transform .15s; }
-.l2 details[open].plan > summary::after, .l2 details[open].pat-guide > summary::after { margin-top: 3px; transform: rotate(-135deg); }
+.l2 details.plan, .l2 details.dvcard { padding: 0; }
+.l2 details.plan > summary, .l2 details.dvcard > summary { list-style: none; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; padding: 12px 16px; cursor: pointer; min-height: 52px; }
+.l2 details.plan > summary::-webkit-details-marker, .l2 details.dvcard > summary::-webkit-details-marker { display: none; }
+.l2 details.plan > summary .ttl, .l2 details.dvcard > summary .ttl { margin: 0; }
+.l2 .dvhint { font-size: 13.5px; line-height: 1.35; color: var(--ink-3); }
+.l2 .dvbody { padding: 0 16px 16px; display: grid; gap: 8px; min-width: 0; }
+.l2 .ppat { margin: 0; }
+.l2 details.plan > summary::after, .l2 details.dvcard > summary::after, .l2 details.pat-guide > summary::after { content: ""; flex: none; width: 8px; height: 8px; margin: -3px 2px 0 auto; border-right: 2px solid var(--ink-3); border-bottom: 2px solid var(--ink-3); transform: rotate(45deg); transition: transform .15s; }
+.l2 details[open].plan > summary::after, .l2 details[open].dvcard > summary::after, .l2 details[open].pat-guide > summary::after { margin-top: 3px; transform: rotate(-135deg); }
 .l2 .pbody { display: grid; gap: 14px; padding: 0 16px 16px; }
 .l2 .pstep { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 12px; align-items: start; }
 .l2 .pstep .pn { width: 30px; height: 30px; border-radius: 50%; background: var(--gold); color: var(--gold-ink); display: grid; place-items: center; font: 800 15px var(--f-head); }
@@ -1259,12 +1272,12 @@ details.more p { margin: 0; }
 .l2 .ptrap p { margin: 0; font-size: 15px; line-height: 1.5; }
 
 /* a stack of cards or rows may shrink to the page width; a long label or a row of numbers then wraps or scrolls inside its own box instead of widening the page */
-.l2 .page, .l2 .pagehead, .l2 .sec, .l2 .sol, .l2 .solhead, .l2 .refmodel, .l2 .guide, .l2 .mistakes, .l2 .mistake, .l2 .fbk, .l2 .fblist, .l2 .rule, .l2 .rule .rev, .l2 .builder, .l2 .bsec, .l2 .pbody, .l2 .hubnote, .l2 .drill, .l2 .drill .more, .l2 .filters, .l2 .pat-body, .l2 .pat-card, .l2 .pat-dl, .l2 .pat-row { grid-template-columns: minmax(0, 1fr); }
+.l2 .page, .l2 .pagehead, .l2 .sec, .l2 .sol, .l2 .solhead, .l2 .bestval, .l2 .dvbody, .l2 .refmodel, .l2 .guide, .l2 .mistakes, .l2 .mistake, .l2 .fbk, .l2 .fblist, .l2 .rule, .l2 .rule .rev, .l2 .builder, .l2 .bsec, .l2 .pbody, .l2 .hubnote, .l2 .drill, .l2 .drill .more, .l2 .filters, .l2 .pat-body, .l2 .pat-card, .l2 .pat-dl, .l2 .pat-row { grid-template-columns: minmax(0, 1fr); }
 
 /* ---------- phones ---------- */
 @media (max-width: 560px) {
   .l2 .plist { grid-template-columns: minmax(0, 1fr); }
-  .l2 .solhead .big { font-size: 30px; }
+  .l2 .bestval .big { font-size: 30px; }
   .l2 .flow td, .l2 .flow th { padding: 6px 3px; font-size: 12.5px; }
   .l2 .flow td:first-child { white-space: normal; min-width: 62px; }
   .l2 .flow th { font-size: 9.5px; letter-spacing: .02em; }
@@ -4536,8 +4549,11 @@ var FM = window.FM, LP = window.LP;
 var NS = 'http://www.w3.org/2000/svg';
 var KEY = 'sigmaeta-lab2-v1';
 var QUIZZES = {};         // quiz key -> list of questions
+/* the two modules of the series: the 4-move method and the drills sit in Part A of the Learning Module, the rest here is the Practice Module */
+var LEARN = { route: 'lab1', title: 'Learning Module' }, PRACTICE = { route: 'lab2', title: 'Practice Module' };
 /* helpers lent by the series shell; harmless defaults let the lab run on its own in tests */
-var HOST = { crumbs: function () { return document.createElement('nav'); }, rich: function (x) { return x; }, icon: function () { return document.createElement('span'); }, meterBar: function () { return document.createElement('div'); } };
+var HOST = { crumbs: function () { return document.createElement('nav'); }, rich: function (x) { return x; }, icon: function () { return document.createElement('span'); }, meterBar: function () { return document.createElement('div'); },
+  afterDrills: function () { return { route: LEARN.route, label: LEARN.title }; } };
 function R(x) { return HOST.rich(x); }
 
 function h(tag, props, kids) {
@@ -4727,9 +4743,10 @@ function quizBlock(stageId, title) {
   return sec(title || 'Quick check', [quiz(stageId)], 'Tap an answer. If it is wrong, you get a hint and can try again.');
 }
 
-/* ===== mini lessons: the same player the series uses for Lab 1 (steps, a progress strip, Back and Next, then a one-at-a-time quick check) ===== */
-var MINI = {};   // id -> { id, title, route, check, steps: [{ title, build() -> [string | node] }], recap: [html], next: step id }
-function miniRoute(m, k) { return 'lab2-' + m.id + (k === 'check' ? '-check' : k > 1 ? '-' + k : ''); }
+/* ===== mini lessons: the same player the series uses for the Learning Module lessons (steps, a progress strip, Back and Next, then a one-at-a-time quick check) =====
+   m = { id, title, base (the route, e.g. 'lab1-method'), home (the module it sits in), after ({route, label}: where the finished quick check leads), check, steps: [{ title, build() -> [string | node] }], recap: [html] } */
+var MINI = {};
+function miniRoute(m, k) { return m.base + (k === 'check' ? '-check' : k > 1 ? '-' + k : ''); }
 function miniSeen(m) { return store.s[m.id] || 0; }
 
 /* one question at a time, a hint after a wrong answer, retry allowed; look and feel match the Lab 1 quick check */
@@ -4805,7 +4822,7 @@ function miniFrame(m, cur, stage, nav) {
   var n = m.steps.length, label = cur <= n ? (n === 1 ? 'Read first' : 'Step ' + cur + ' of ' + n) : 'Quick check';
   return h('div', { class: 'l2' }, [
     h('div', { class: 'pl-top' }, [
-      HOST.crumbs([{ href: 'home', label: 'Home' }, { href: 'lab2', label: 'LP Formulation Practice' }, { label: m.title }]),
+      HOST.crumbs([{ href: 'home', label: 'Home' }, { href: m.home.route, label: m.home.title }, { label: m.title }]),
       h('div', { class: 'pl-title' }, [h('h1', { text: m.title }), h('span', { class: 'pl-count', text: label })]),
       miniSegments(m, cur)
     ]),
@@ -4828,18 +4845,17 @@ function mountMiniStep(m, k) {
     h('div', { class: 'st-head' }, [h('p', { class: 'kicker', text: n === 1 ? 'Read first' : 'Step ' + k + ' of ' + n }), h('h2', { tabindex: '-1', html: st.title })]),
     say
   ]));
-  var back = k > 1 ? { route: miniRoute(m, k - 1), label: 'Back' } : { route: 'lab2', label: 'Lab 2' };
+  var back = k > 1 ? { route: miniRoute(m, k - 1), label: 'Back' } : { route: m.home.route, label: m.home.title };
   var next = { route: miniRoute(m, k < n ? k + 1 : 'check'), label: k < n ? 'Next' : 'Quick check' };
   return miniFrame(m, k, stage, miniNav({ back: back, next: next, mid: k < n ? 'Next: ' + plain(m.steps[k].title) : 'Next: a few questions to check yourself' }));
 }
 
 function mountMiniCheck(m) {
   var n = m.steps.length, finish = null, wrapEl = null;
-  var nextStep0 = m.next ? stepById(m.next) : null;
   var nav = miniNav({ back: { route: miniRoute(m, n), label: 'Back' }, mid: 'Get every question right to finish' });
   function done(act) {
     miniSeenAt(m, n + 1);
-    var go = nextStep0 ? { route: nextStep0.route, label: 'Next: ' + nextStep0.title } : { route: 'lab2', label: 'Lab 2 home' };
+    var go = m.after;
     act.appendChild(h('a', { class: 'se-btn gold', href: '#' + go.route }, [go.label, HOST.icon('right')]));
     var navEl = $('#pl-nav');
     if (navEl && !finish) { finish = h('a', { class: 'se-btn gold next', href: '#' + go.route }, [go.label, HOST.icon('right')]); navEl.appendChild(finish); }
@@ -4865,7 +4881,7 @@ function mountMini(m, sub) {
   return mountMiniStep(m, k);
 }
 
-/* ===== step 1: the method in four moves, one worked story, words to signs, three habits ===== */
+/* ===== the method in four moves, one worked story, words to signs, three habits (Part A of the Learning Module) ===== */
 QUIZZES.method = [
   { id: 'm1', q: 'A story says “each week at least 40 units must be shipped to the warehouse”. Which sign goes in the row?',
     o: ['≤', '≥', '=', 'It depends on the profit'], a: 1,
@@ -4959,12 +4975,12 @@ function stepHabits() {
   ];
 }
 MINI.method = {
-  id: 'method', title: 'The 4-move method', check: 'method', checkTitle: 'Check the method', next: 'drills',
+  id: 'method', title: 'The 4-move method', base: 'lab1-method', home: LEARN, after: { route: 'lab1-drills', label: 'Next: Warm-up drills' }, check: 'method', checkTitle: 'Check the method',
   steps: [{ title: 'The four moves', build: stepMoves }, { title: 'Watch it work', build: stepSoap }, { title: 'Words to signs', build: stepWords }, { title: 'Three habits', build: stepHabits }],
   recap: ['The four moves: <b>name the decisions, write the objective, one limit per row, say the obvious</b> (x ≥ 0).', '“At most” is ≤, “at least” is ≥, “exactly” is =. For ratios and percents, <b>test with a number</b>.', 'Keep <b>one unit per row</b>, and make sure every row has a sentence behind it.']
 };
 
-/* ===== step 2: one-sentence drills ===== */
+/* ===== one-sentence drills (Part A of the Learning Module) ===== */
 var DRILL_CAT = null, DRILL_P = {};
 function drillP(d) { return DRILL_P[d.id] || (DRILL_P[d.id] = FM.compile({ id: d.id, vars: d.vars, cons: d.cons, noFlags: true })); }
 
@@ -5048,7 +5064,7 @@ function mountDrills() {
   var root = h('div', { class: 'page' });
   var cats = DRILL_CATS.map(function (c) { return { c: c, list: DRILLS.filter(function (d) { return d.cat === c.id; }) }; });
   if (!DRILL_CAT) { var open = cats.filter(function (x) { return x.list.some(function (d) { return !store.d[d.id]; }); })[0]; DRILL_CAT = (open || cats[0]).c.id; }
-  root.appendChild(pageHead('Step 2 · Warm up', 'One-sentence drills', 'Most marks in a formulation come from turning one sentence into one row. Each drill gives a sentence and its variables. Type the row, press Check, and read the reply.'));
+  root.appendChild(pageHead('Part A · Warm up', 'One-sentence drills', 'Most marks in a formulation come from turning one sentence into one row. Each drill gives a sentence and its variables. Type the row, press Check, and read the reply.'));
   root.appendChild(h('p', { class: 'small muted', html: 'Type it like on paper: <span class="m">3x1 + 2x2 &lt;= 18</span> and <span class="m">3x₁ + 2x₂ ≤ 18</span> both work. Pick a topic below to see its pattern.' }));
   var pillsEl = h('div', { class: 'pills', role: 'group', 'aria-label': 'Drill topic' }), primer = h('div', { class: 'card primer' }), listEl = h('div', { style: 'display:grid;gap:14px' });
   root.appendChild(pillsEl); root.appendChild(primer); root.appendChild(listEl); root.appendChild(navRow('drills'));
@@ -5073,7 +5089,7 @@ function mountDrills() {
 }
 
 /* ===== step 3: the problem bank, grouped from easy to hard ===== */
-var FILTER = { type: 'All', src: 'All', q: '' };
+var FILTER = { type: 'All', src: 'All', status: 'All', q: '' };   // status: 'All' | 'Todo' (not solved yet) | 'Solved'
 /* a problem with a printed number carries a label such as "Problem 3.15 · p. 109" in p.ref; the rest are extra practice */
 function isNumbered(p) { return !!p.ref; }
 var LEVEL_NOTE = {
@@ -5133,7 +5149,7 @@ function patternGuide() {
 function mountProblems() {
   var root = h('div', { class: 'page wide' });
   var nNum = BANK.filter(isNumbered).length;
-  root.appendChild(pageHead('Step 3 · Practice', 'Practice problems', BANK.length + ' problems, from warm-ups to full cases. ' + nNum + ' of them carry a problem number and a page, so you can find them in your own problem set. Open one, type your model the way you would on paper, and press Check.'));
+  root.appendChild(pageHead(PRACTICE.title, 'Practice problems', BANK.length + ' problems, from warm-ups to full cases. ' + nNum + ' of them carry a problem number and a page, so you can find them in your own problem set. Open one, type your model the way you would on paper, and press Check.'));
   var summary = h('div', { class: 'psum' });
   var upnext = h('div', { class: 'upnext' });
   var filters = h('div', { class: 'filters' }), list = h('div', { class: 'stack-list', style: 'display:grid;gap:22px' });
@@ -5154,6 +5170,8 @@ function mountProblems() {
   }
   function matches(p) {
     if (FILTER.type !== 'All' && p.type !== FILTER.type) return false;
+    if (FILTER.status === 'Solved' && probState(p.id) !== 'solved') return false;
+    if (FILTER.status === 'Todo' && probState(p.id) === 'solved') return false;
     if (FILTER.src === 'Numbered' && !isNumbered(p)) return false;
     if (FILTER.src === 'More' && isNumbered(p)) return false;
     var q = FILTER.q.trim().toLowerCase();
@@ -5171,8 +5189,8 @@ function mountProblems() {
     return null;
   }
   function card(p) {
-    var tag = p.tag && !/integer/i.test(p.tag) ? h('span', { class: 'chip info' }, p.tag) : null;
-    return h('a', { class: 'pcard', href: '#' + probRoute(p) }, [
+    var tag = p.tag && !/integer/i.test(p.tag) ? h('span', { class: 'chip info' }, p.tag) : null, s0 = probState(p.id);
+    return h('a', { class: 'pcard' + (s0 === 'solved' ? ' solved' : s0 === 'revealed' ? ' peeked' : ''), href: '#' + probRoute(p) }, [
       h('div', { class: 'top1' }, [h('span', { class: 't', text: p.title }), stat(p)]),
       h('div', { class: 'meta' }, [h('span', { text: p.type }), h('span', { class: 'nowrap' }, [lvDots(p.lv), ' ' + LV[p.lv]])]),
       p.ref ? h('div', { class: 's ref', text: p.ref }) : null,
@@ -5183,12 +5201,12 @@ function mountProblems() {
     var shown = BANK.map(function (p, i) { return { p: p, i: i }; }).filter(function (o) { return matches(o.p); })
       .sort(function (a, b) { return refOrder(a.p) - refOrder(b.p) || a.i - b.i; }).map(function (o) { return o.p; });
     clear(list);
-    if (!shown.length) { list.appendChild(h('p', { class: 'empty', text: 'No problem matches. Clear the search box or choose “All” in one of the rows.' })); return; }
+    if (!shown.length) { list.appendChild(h('p', { class: 'empty', text: FILTER.status === 'Todo' && !FILTER.q.trim() && FILTER.type === 'All' && FILTER.src === 'All' ? 'Nothing left to solve. Well done! Choose “All” in the Status row to see every problem again.' : 'No problem matches. Clear the search box or choose “All” in one of the rows.' })); return; }
     [1, 2, 3].forEach(function (lv) {
-      var g = shown.filter(function (p) { return p.lv === lv; });
+      var g = shown.filter(function (p) { return p.lv === lv; }), nSolved = g.filter(function (p) { return probState(p.id) === 'solved'; }).length;
       if (!g.length) return;
       list.appendChild(h('section', { class: 'sec' }, [
-        h('h3', { class: 'grouphead' }, [lvDots(lv), LV[lv], h('span', { class: 'n', text: g.length + (g.length === 1 ? ' problem' : ' problems') })]),
+        h('h3', { class: 'grouphead' }, [lvDots(lv), LV[lv], h('span', { class: 'n', text: g.length + (g.length === 1 ? ' problem' : ' problems') + (nSolved ? ' · ' + nSolved + ' solved' : '') })]),
         h('p', { class: 'small muted', text: LEVEL_NOTE[lv] }),
         h('div', { class: 'plist' }, g.map(card))
       ]));
@@ -5210,6 +5228,8 @@ function mountProblems() {
     } else upnext.appendChild(h('div', { class: 'card nx' }, h('p', { class: 'nxt', text: 'You have opened every problem. Well done! Go back to any one to try it again.' })));
 
     clear(filters);
+    var nDone = BANK.filter(function (p) { return probState(p.id) === 'solved'; }).length;
+    filters.appendChild(pills('Status', [{ v: 'All', label: 'All', n: BANK.length }, { v: 'Todo', label: 'Not solved yet', n: BANK.length - nDone }, { v: 'Solved', label: 'Solved', n: nDone }], function () { return FILTER.status; }, function (v) { FILTER.status = v; }));
     var tcount = function (t) { return BANK.filter(function (p) { return t === 'All' || p.type === t; }).length; };
     filters.appendChild(pills('Topic', [{ v: 'All', label: 'All', n: BANK.length }].concat(TYPES.filter(function (t) { return tcount(t) > 0; }).map(function (t) { return { v: t, label: t, n: tcount(t) }; })), function () { return FILTER.type; }, function (v) { FILTER.type = v; }));
     filters.appendChild(pills('Kind', [{ v: 'All', label: 'All' }, { v: 'Numbered', label: 'Numbered problems', n: nNum }, { v: 'More', label: 'More practice', n: BANK.length - nNum }], function () { return FILTER.src; }, function (v) { FILTER.src = v; }));
@@ -5260,16 +5280,21 @@ function mountProblem(p) {
 
   /* ----- header ----- */
   root.appendChild(h('div', { class: 'pagehead' }, [
-    HOST.crumbs([{ href: 'home', label: 'Home' }, { href: 'lab2', label: 'LP Formulation Practice' }, { href: 'lab2-problems', label: 'Practice problems' }]),
+    HOST.crumbs([{ href: 'home', label: 'Home' }, { href: PRACTICE.route, label: PRACTICE.title }, { href: 'lab2-problems', label: 'Practice problems' }]),
     h('h2', { tabindex: '-1', text: p.title }),
     h('div', { class: 'row' }, [h('span', { class: 'chip info' }, p.type), h('span', { class: 'chip lv' }, [lvDots(p.lv), LV[p.lv]]), p.ref ? h('span', { class: 'chip ref' }, p.ref) : null])
   ]));
 
   /* ----- story column ----- */
+  /* the decision variables start closed, so a first attempt begins with the story and the data only; tap to compare with the names this page uses */
+  var varsCard = h('details', { class: 'card dvcard' }, [
+    h('summary', null, [h('span', { class: 'ttl', text: 'Decision variables' }), h('span', { class: 'dvhint', text: 'Try your own first. Tap to compare.' })]),
+    h('div', { class: 'dvbody' }, varsView(p, P))
+  ]);
   var storyCards = [
     h('div', { class: 'card story' }, [h('p', { class: 'ttl', text: 'The story' }), h('div', { html: p.story }), p.note ? h('p', { class: 'note', html: p.note }) : null]),
     h('div', { class: 'card' }, [h('p', { class: 'ttl', text: 'The data' }), dataTable(p.table), p.table2 ? h('div', { style: 'margin-top:10px' }, dataTable(p.table2)) : null]),
-    h('div', { class: 'card' }, [h('p', { class: 'ttl', text: 'Decision variables' })].concat(varsView(p, P)))
+    varsCard
   ];
   root.appendChild(h('div', { class: 'storycol' }, storyCards));
 
@@ -5277,7 +5302,10 @@ function mountProblem(p) {
   var builder = h('div', { class: 'card builder' });
   function rel(sym) { return h('button', { type: 'button', class: 'ins rel', text: sym, 'aria-label': sym === '≤' ? 'less than or equal' : sym === '≥' ? 'greater than or equal' : 'equals', onmousedown: keepFocus, onclick: function () { insertText(sym); } }); }
   function keepFocus(e) { e.preventDefault(); }
-  var varChips = P.names.map(function (n, j) { return h('button', { type: 'button', class: 'ins', title: P.vars[j].d, text: n, onmousedown: keepFocus, onclick: function () { insertText(n); } }); });
+  var varChips = P.names.map(function (n, j) { return h('button', { type: 'button', class: 'ins', text: n, onmousedown: keepFocus, onclick: function () { insertText(n); } }); });
+  /* the tooltip on a name says what the variable means, so it appears only after the Decision variables card has been opened */
+  function nameTips() { varChips.forEach(function (b, j) { if (varsCard.open) b.setAttribute('title', P.vars[j].d); else b.removeAttribute('title'); }); }
+  varsCard.addEventListener('toggle', nameTips);
   builder.appendChild(h('div', { class: 'bsec' }, [
     h('p', { class: 'ttl', text: 'Your model' }),
     h('p', { class: 'small muted', html: 'Write it like on paper. <span class="m">3x1 + 2x2 &lt;= 18</span> works, and so does <span class="m">3x₁ + 2x₂ ≤ 18</span>. Tap a name or a sign to drop it into the box you are typing in.' }),
@@ -5582,32 +5610,24 @@ function planStep(n, title, html) {
 function planCard(p, P) {
   var pl = p.plan || autoPlan(p, P);
   var kids = [
+    pl.pattern ? h('p', { class: 'ppat' }, [h('span', { class: 'chip info', text: pl.pattern })]) : null,
     planStep(1, 'Pick the variables', pl.pick),
     planStep(2, 'Write the objective', pl.build)
   ];
   if (pl.trap) kids.push(h('div', { class: 'ptrap' }, [icon('warn'), h('p', { html: '<b>Watch out.</b> ' + pl.trap })]));
   kids.push(planStep(3, 'Then write the rules', 'Read the story one sentence at a time. Each limit, need or link between your choices becomes one rule. If a rule will not come, press Check. The hints appear then.'));
-  return h('details', { class: 'plan card', open: true }, [
-    h('summary', null, [h('span', { class: 'ttl', text: 'Plan before you type' }), pl.pattern ? h('span', { class: 'chip info', text: pl.pattern }) : null]),
+  /* closed by default: the plan names the variables and the objective, so a first attempt starts without it; open it when you are stuck */
+  return h('details', { class: 'plan card' }, [
+    h('summary', null, [h('span', { class: 'ttl', text: 'Plan before you type' }), h('span', { class: 'dvhint', text: 'Stuck? Open this for a step-by-step plan.' })]),
     h('div', { class: 'pbody' }, kids)
   ]);
 }
 
-/* ===== after the model is right (or revealed): the best plan, which rules bite, the model written out, Solver layout ===== */
-function seeded(str) {
-  var x = 2166136261;
-  for (var i = 0; i < str.length; i++) { x ^= str.charCodeAt(i); x = Math.imul(x, 16777619); }
-  if (!x) x = 1;
-  return function () { x ^= x << 13; x ^= x >>> 17; x ^= x << 5; return ((x >>> 0) % 100000) / 100000; };
-}
-function shuffled(arr, rnd) {
-  var a = arr.slice();
-  for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(rnd() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; }
-  return a;
-}
+/* ===== after the model is right (or revealed): the answer key.
+   Order: the model written out (the main answer), the best plan, whole numbers, binding and non-binding constraints, the Solver layout ===== */
 function rnd4(v) { return Math.round(v * 1e4) / 1e4; }
 
-/* which rules are tight at plan x? one entry per reference row */
+/* which constraints are binding at plan x? one entry per reference row; slack = the unused amount (0 when the constraint is binding) */
 function rowReport(P, x, lp, useDual) {
   return P.rows.map(function (r, i) {
     var used = LP.lhs(r.a, x), slack = r.rel === '<=' ? r.b - used : r.rel === '>=' ? used - r.b : 0;
@@ -5670,62 +5690,11 @@ function solverLayout(p, P, x, value) {
     P.rows.forEach(function (r) {
       tbl.push(h('tr', null, [h('td', { class: 'lb2', text: P.rules[r.k].text })].concat(r.a.map(function (v) { return h('td', { text: fnum(v) }); })).concat([h('td', { text: fnum(rnd4(LP.lhs(r.a, x))) }), h('td', { text: FM.relSym(r.rel) }), h('td', { text: fnum(r.b) })])));
     });
-    kids.push(h('p', { class: 'small', text: 'One row per rule, one column per decision. Left side = SUMPRODUCT of that row with the changing cells. The shaded cells are the ones Solver changes.' }),
+    kids.push(h('p', { class: 'small', text: 'One row per constraint, one column per decision. Left side = SUMPRODUCT of that row with the changing cells. The shaded cells are the ones Solver changes.' }),
       h('div', { class: 'scroll-x' }, h('table', { class: 'tbl xl' }, [h('thead', null, hd), h('tbody', null, tbl)])));
   }
   kids.push(h('p', { class: 'small muted', text: 'In Solver: set the objective cell to ' + (P.sense === 'max' ? 'Max' : 'Min') + ', choose Simplex LP, tick “Make unconstrained variables non-negative”' + (P.integer ? ', and add the constraint that the changing cells are integers.' : '.') }));
   return h('div', { class: 'guide' }, kids);
-}
-
-function solutionQuestions(p, P, lp, best, rep) {
-  var qs = [], rnd = seeded(p.id);
-  var byRule = {};
-  rep.forEach(function (r) { var o = byRule[r.k] || (byRule[r.k] = { k: r.k, eq: false, slack: Infinity, dual: 0, used: r.used }); if (r.rel === '=') o.eq = true; o.slack = Math.min(o.slack, r.slack); if (r.dual !== null && Math.abs(r.dual) > Math.abs(o.dual)) o.dual = r.dual; });
-  var rules = Object.keys(byRule).map(function (k) { return byRule[k]; }).filter(function (o) { return !o.eq; });
-  var bind = rules.filter(function (o) { return o.slack === 0; }), room = rules.filter(function (o) { return o.slack > 0; });
-  function rt(o) { return esc(P.rules[o.k].text); }
-  if (room.length >= 1 && bind.length >= 2) {
-    room.sort(function (a, b) { return b.slack - a.slack; });
-    var right = room[0], opts = shuffled([right].concat(shuffled(bind, rnd).slice(0, 3)), rnd);
-    qs.push({ id: 'sol-' + p.id + '-room', q: 'At the best plan, which of these rules has room to spare (is not tight)?', o: opts.map(rt), a: opts.indexOf(right),
-      hint: ' A tight rule is met exactly: all the hours are used, or the requirement is only just reached. Which one is not?',
-      why: ' At the best plan there is ' + fnum(rnd4(right.slack)) + ' of room on this rule. The other options are met exactly, and those tight rules are what stop the plan improving.' });
-  } else if (bind.length >= 1 && room.length >= 2) {
-    var tight = shuffled(bind, rnd)[0], opts2 = shuffled([tight].concat(shuffled(room, rnd).slice(0, 3)), rnd);
-    qs.push({ id: 'sol-' + p.id + '-tight', q: 'At the best plan, which of these rules is tight (met exactly, with nothing to spare)?', o: opts2.map(rt), a: opts2.indexOf(tight),
-      hint: ' Look at the “Status” column of the table above.',
-      why: ' This rule has no room left at the best plan, so it is the one that limits the answer. The others still have room.' });
-  }
-  if (!P.integer && lp.status === 'optimal') {
-    var nz = lp.x.filter(function (v) { return v > 1e-7; }).length, ps = lp.slack.filter(function (v) { return v > 1e-7; }).length;
-    var nondeg = nz + ps === P.rows.length;
-    var cand = bind.filter(function (o) { return Math.abs(o.dual) > 1e-6; }).sort(function (a, b) { return Math.abs(b.dual) - Math.abs(a.dual); })[0];
-    if (nondeg && cand) {
-      var y = rnd4(Math.abs(cand.dual)), up = cand.dual > 0;
-      var all = [{ t: 'It goes up by ' + fnum(y), ok: up }, { t: 'It goes down by ' + fnum(y), ok: !up }, { t: 'It does not change', ok: false }, { t: 'It goes up by ' + fnum(rnd4(2 * y)), ok: false }];
-      var sh = shuffled(all, rnd);
-      qs.push({ id: 'sol-' + p.id + '-shadow', q: '“' + esc(P.rules[cand.k].text) + '” is tight at the best plan. If the number on its right-hand side went up by 1, what happens to the best value?', o: sh.map(function (o) { return o.t; }), a: sh.map(function (o) { return o.ok; }).indexOf(true),
-        hint: ' This is the shadow price of the rule: the change in the best value for one more unit on the right-hand side.',
-        why: ' The shadow price of this rule is ' + fnum(rnd4(cand.dual)) + ': each extra unit on the right-hand side moves the best value by that much, as long as the same rules stay tight.' });
-    }
-  }
-  if (P.integer && best.relaxation !== undefined) {
-    qs.push({ id: 'sol-' + p.id + '-int', q: 'Fractions allowed, the best value is ' + fnum(rnd4(best.relaxation)) + '. Whole numbers required, it is ' + fnum(rnd4(best.value)) + '. Which statement is true in general?',
-      o: shuffled(['The whole-number best can never beat the fractions-allowed best.', 'The whole-number best is always better, because whole numbers are cleaner.', 'The two values are always equal.', 'Rounding the fractional plan always gives the whole-number optimum.'], seeded(p.id + 'i')), a: -1,
-      hint: ' Requiring whole numbers removes some plans. Can removing options ever help?',
-      why: ' Whole numbers only take plans away, so the best value cannot improve. Rounding the fractional plan can break a rule or leave value on the table, which is why integer programs need branch and bound.' });
-    var q3 = qs[qs.length - 1]; q3.a = q3.o.indexOf('The whole-number best can never beat the fractions-allowed best.');
-  }
-  if (qs.length < 2 && P.n >= 4) {   // a simple reading question for models that produced few others
-    var order = best.x.map(function (v, j) { return { v: v, j: j }; }).sort(function (a, b) { return b.v - a.v; });
-    if (order[0].v > order[1].v + 1e-6 && order[0].v > 1e-6) {
-      var rest = shuffled(order.slice(1).map(function (o) { return o.j; }), rnd).slice(0, 3), ids = shuffled([order[0].j].concat(rest), rnd);
-      qs.push({ id: 'sol-' + p.id + '-max', q: 'In the best plan, which decision has the largest value?', o: ids.map(function (j) { return esc(P.vars[j].d.charAt(0).toUpperCase() + P.vars[j].d.slice(1)); }), a: ids.indexOf(order[0].j),
-        hint: ' Look down the “Best value” numbers in the plan above.',
-        why: ' It is ' + fnum(rnd4(order[0].v)) + ' at the best plan, more than any other decision.' });
-    }
-  }
-  return qs;
 }
 
 function mountSolution(p, P, how) {
@@ -5737,20 +5706,23 @@ function mountSolution(p, P, how) {
   var x = best.x, rep = rowReport(P, x, lp, !P.integer);
   var T = p.transport;
 
-  root.appendChild(h('div', { class: 'solhead' }, [
-    h('p', { class: 'ttl', text: how === 'revealed' ? 'Answer key' : 'Answer' }),
-    h('div', { class: 'lb2', text: (P.sense === 'max' ? 'Maximum: ' : 'Minimum: ') + p.objRule }),
-    h('div', { class: 'big', text: fnum(rnd4(best.value)) })
-  ]));
+  root.appendChild(h('div', { class: 'solhead' }, h('p', { class: 'ttl', text: how === 'revealed' ? 'Answer key' : 'Answer' })));
   if (how === 'revealed') root.appendChild(h('div', { class: 'rmsg info' }, [icon('eye'), h('span', { text: 'You looked at the answer here, so this problem is marked “Saw answer”. Use “Clear and start over” above if you want to try it again from scratch.' })]));
-  if (lp.alt && !P.integer) root.appendChild(h('div', { class: 'rmsg info' }, [icon('info'), h('span', { text: 'More than one plan reaches this value. The one shown is one of them.' })]));
 
-  /* the plan */
-  if (T) root.appendChild(sec('The best plan', [flowMatrix(P, T, x)], 'Shaded cells are the routes that carry something.'));
-  else root.appendChild(sec('The best plan', [table({ head: ['Decision', 'Best value'], num: [false, true], cls: 'data',
-    rows: P.vars.map(function (v, j) { var r = ['<b class="m">' + v.h + '</b> <span class="muted">' + esc(v.d) + '</span>', fnum(rnd4(x[j]))]; if (Math.abs(x[j]) < 1e-9) r.cls = 'dim'; return r; }) })]));
+  /* 1. the model written out: this is the answer to the question, so it comes first */
+  root.appendChild(sec('The model written out', [refModelView(p, P)], how === 'revealed' ? 'The full model for this story: the decisions, the objective, every constraint and the non-negativity.' : 'Your model says the same as this one, even if you wrote the rows differently.'));
 
-  /* integer note */
+  /* 2. the best plan this model gives */
+  var plan = T ? flowMatrix(P, T, x)
+    : table({ head: ['Decision', 'Best value'], num: [false, true], cls: 'data',
+      rows: P.vars.map(function (v, j) { var r = ['<b class="m">' + v.h + '</b> <span class="muted">' + esc(v.d) + '</span>', fnum(rnd4(x[j]))]; if (Math.abs(x[j]) < 1e-9) r.cls = 'dim'; return r; }) });
+  root.appendChild(sec('The best plan', [
+    h('div', { class: 'bestval' }, [h('div', { class: 'lb2', text: (P.sense === 'max' ? 'Maximum: ' : 'Minimum: ') + p.objRule }), h('div', { class: 'big', text: fnum(rnd4(best.value)) })]),
+    plan,
+    lp.alt && !P.integer ? h('div', { class: 'rmsg info' }, [icon('info'), h('span', { text: 'More than one plan reaches this value. The one shown is one of them.' })]) : null
+  ], T ? 'Shaded cells are the routes that carry something.' : null));
+
+  /* 3. whole numbers */
   if (P.integer && best.relaxation !== undefined) {
     var gap = Math.abs(best.relaxation - best.value);
     root.appendChild(sec('Whole numbers cost something', [h('div', { class: 'stats' }, [
@@ -5759,29 +5731,24 @@ function mountSolution(p, P, how) {
     ])], 'The relaxation drops the whole-number requirement. It is the quick bound the integer answer can never beat.'));
   }
 
-  /* which rules bite */
+  /* 4. binding and non-binding constraints: slack 0 means binding */
   var nz = x.filter(function (v) { return v > 1e-7; }).length, ps = rep.filter(function (r) { return r.slack > 1e-7; }).length;
   var showDual = !P.integer && nz + ps === P.rows.length;   // a degenerate plan has no single set of shadow prices
-  var tbl = table({ stack: true, cls: 'rules', head: ['Rule', 'Used', 'Limit', 'Status'].concat(showDual ? ['Shadow price'] : []), num: [false, true, true, false, true],
+  var tbl = table({ stack: true, cls: 'rules', head: ['Constraint', 'Used', 'Limit', 'Slack', 'Status'].concat(showDual ? ['Shadow price'] : []), num: [false, true, true, true, false, true],
     rows: rep.map(function (r) {
-      var lim = FM.relSym(r.rel) + ' ' + fnum(rnd4(r.b)), tight = r.slack === 0;
-      var status = tight ? '<span class="tag-b bind">Tight</span>' : '<span class="tag-b slack">Room: ' + fnum(rnd4(r.slack)) + '</span>';
-      var row = [esc(P.rules[r.k].text) + (P.rules[r.k].rows.length === 2 ? ' <span class="muted">(' + (r.rel === '>=' ? 'lower' : 'upper') + ' limit)</span>' : ''), fnum(rnd4(r.used)), lim, status];
+      var lim = FM.relSym(r.rel) + ' ' + fnum(rnd4(r.b)), binding = r.slack === 0;
+      var status = binding ? '<span class="tag-b bind">Binding</span>' : '<span class="tag-b slack">Non-binding</span>';
+      var row = [esc(P.rules[r.k].text) + (P.rules[r.k].rows.length === 2 ? ' <span class="muted">(' + (r.rel === '>=' ? 'lower' : 'upper') + ' limit)</span>' : ''), fnum(rnd4(r.used)), lim, fnum(rnd4(r.slack)), status];
       if (showDual) row.push(r.dual === null ? '' : fnum(rnd4(r.dual)));
       return row;
     }) });
-  root.appendChild(sec('Which rules limit the plan', [tbl], P.integer ? 'A tight rule is met exactly. Shadow prices only make sense for models without a whole-number requirement.' : showDual ? 'A tight rule is met exactly, so it is what stops the plan improving. The shadow price is how much the best value moves for one more unit on its right-hand side.' : 'A tight rule is met exactly, so it is what stops the plan improving. Some rules here are tight in a redundant way (the plan is degenerate), so shadow prices are not unique and are left out.'));
+  var note = 'Slack is how far the plan is from the limit: the unused amount for an “at most” rule, or the extra above the minimum for an “at least” rule. A constraint with slack 0 is <b>binding</b>: the plan reaches its limit exactly, so it holds the plan back. A constraint with slack above 0 is <b>non-binding</b>.';
+  note += P.integer ? ' Shadow prices only make sense for models without a whole-number requirement.'
+    : showDual ? ' The <b>shadow price</b> is how much the best value changes for one more unit on the right-hand side of a binding constraint.'
+    : ' Some constraints here are binding in a redundant way (the plan is degenerate), so shadow prices are not unique and are left out.';
+  root.appendChild(sec('Binding and non-binding constraints', [tbl], note));
 
-  /* questions */
-  var qs = solutionQuestions(p, P, lp, best, rep);
-  if (qs.length) {
-    var wrap = h('div', { class: 'quiz' });
-    qs.forEach(function (q, i) { wrap.appendChild(question(q, i)); });
-    root.appendChild(sec('Read the answer', [wrap], 'Short questions generated from this problem’s own numbers.'));
-  }
-
-  /* the model written out, and the Solver layout */
-  root.appendChild(h('details', Object.assign({ class: 'more' }, how === 'revealed' ? { open: true } : {}), [h('summary', { text: 'The model written out' }), h('div', null, refModelView(p, P))]));
+  /* 5. the Solver layout */
   root.appendChild(h('details', { class: 'more' }, [h('summary', { text: 'How this goes into an Excel Solver sheet' }), h('div', null, solverLayout(p, P, x, best.value))]));
 
   /* next */
@@ -5790,7 +5757,7 @@ function mountSolution(p, P, how) {
   return root;
 }
 
-/* ===== step 4: spot the mistake, and the slips that cost the most marks ===== */
+/* ===== spot the mistake, and the slips that cost the most marks (the second step of the Practice Module) ===== */
 QUIZZES.checklist = [
   { id: 'c1', q: 'A truck can carry at most 20 cubic metres. A box of type A takes 0.5 m³ and a box of type B takes 0.8 m³. A student writes this row. What is wrong?',
     spot: '0.5a + 0.8b ≥ 20',
@@ -5858,19 +5825,15 @@ function stepSlips() {
   ];
 }
 MINI.checklist = {
-  id: 'checklist', title: 'Spot the mistake', check: 'checklist', checkTitle: 'Find the error', next: null,
+  id: 'checklist', title: 'Spot the mistake', base: 'lab2-checklist', home: PRACTICE, after: { route: 'lab2', label: PRACTICE.title + ' home' }, check: 'checklist', checkTitle: 'Find the error',
   steps: [{ title: 'Eight slips that cost marks', build: stepSlips }],
   recap: ['Check the <b>sign</b> (≤ or ≥), the <b>ratio direction</b>, and the <b>units</b> in every row.', 'A percent is a share of the <b>whole total</b>. “Exactly” means =.', 'Do not forget <b>x ≥ 0</b>, and whole numbers when you cannot split the thing.']
 };
 
-/* ===== the lab's front door: home page, step navigation, and the SE_LAB2 object the series shell talks to ===== */
+/* ===== the front door: the Practice Module home page, step navigation, and the SE_LAB2 object the series shell talks to.
+   Two things in this file belong to the Learning Module instead (Part A, Problem Formulation): the 4-move method and the warm-up drills. They are
+   handed to the shell as PART_A and open inside the Learning Module's frame. Everything in STEPS is the Practice Module. ===== */
 var STEPS = [
-  { id: 'method', route: 'lab2-method', title: 'The 4-move method', time: '8 min', what: '4 short steps and a quick check', mount: function (sub) { return mountMini(MINI.method, sub); },
-    blurb: 'Learn the four moves that turn any story into a model. Includes one worked example, tap by tap.',
-    stat: function () { var t = stageStats('method'); return { done: stageDone('method'), text: t.right + ' of ' + t.total + ' right' }; } },
-  { id: 'drills', route: 'lab2-drills', title: 'Warm-up drills', time: '25 min', what: DRILLS.length + ' short drills', mount: mountDrills,
-    blurb: 'Turn one sentence into one row. Type it, press Check, and read the reply.',
-    stat: function () { return { done: stageDone('drills'), text: drillsDone() + ' of ' + DRILLS.length + ' done' }; } },
   { id: 'problems', route: 'lab2-problems', title: 'Practice problems', time: '10 min each', what: BANK.length + ' problems, easy to hard', mount: mountProblems,
     blurb: 'Full exam-style problems. Build the whole model and the page checks it, row by row, with hints.',
     stat: function () { return { done: stageDone('problems'), text: problemsDone() + ' of ' + BANK.length + ' done' }; } },
@@ -5882,20 +5845,38 @@ function stepIndex(id) { for (var i = 0; i < STEPS.length; i++) if (STEPS[i].id 
 function stepById(id) { var i = stepIndex(id); return i >= 0 ? STEPS[i] : null; }
 function stepByRoute(r) { for (var i = 0; i < STEPS.length; i++) if (STEPS[i].route === r) return STEPS[i]; return null; }
 
-/* back / next buttons at the foot of each page */
-function navRow(id) {
-  var i = stepIndex(id), prev = STEPS[i - 1], next = STEPS[i + 1];
+/* Part A of the Learning Module: the method, then the drills. The shell draws their cards and outline entries from these records. */
+var DRILLS_TITLE = 'Warm-up drills';
+var PART_A = [
+  { id: 'method', route: 'lab1-method', title: 'The 4-move method', mins: 8, what: '4 short steps and a quick check', icon: 'list',
+    goal: 'Learn the four moves that turn any story into a model. Includes one worked example, tap by tap.',
+    done: function () { return stageDone('method'); },
+    chip: function () { var t = stageStats('method'); return t.right + ' of ' + t.total + ' right'; },
+    mount: function (sub) { return { el: mountMini(MINI.method, sub), title: MINI.method.title, saveRoute: 'lab1-method' + (sub || '') }; } },
+  { id: 'drills', route: 'lab1-drills', title: DRILLS_TITLE, mins: 25, what: DRILLS.length + ' short drills', icon: 'flame', optional: true, count: DRILLS.length + ' warm-up drills',
+    goal: 'Turn one sentence into one row. Type it, press Check, and read the reply.',
+    done: function () { return stageDone('drills'); },
+    chip: function () { return drillsDone() + ' of ' + DRILLS.length + ' done'; },
+    mount: function () { return { el: framedLearn(DRILLS_TITLE, mountDrills()), title: DRILLS_TITLE, saveRoute: 'lab1-drills' }; } }
+];
+
+/* back / next buttons at the foot of the problem list and the drills */
+function navTo(back, next) {
   return h('div', { class: 'nextbar' }, [
-    h('a', { class: 'se-btn', href: '#' + (prev ? prev.route : 'lab2') }, [HOST.icon('left'), prev ? prev.title : 'Lab 2 home']),
-    h('a', { class: 'se-btn gold', href: '#' + (next ? next.route : 'lab2') }, [next ? next.title : 'Lab 2 home', HOST.icon('right')])
+    h('a', { class: 'se-btn', href: '#' + back.route }, [HOST.icon('left'), back.label]),
+    h('a', { class: 'se-btn gold', href: '#' + next.route }, [next.label, HOST.icon('right')])
   ]);
+}
+function navRow(id) {
+  if (id === 'drills') return navTo({ route: 'lab1-method', label: 'The 4-move method' }, HOST.afterDrills());
+  var nx = stepById('checklist');
+  return navTo({ route: PRACTICE.route, label: PRACTICE.title }, { route: nx.route, label: nx.title });
 }
 
 function nextStep() { for (var i = 0; i < STEPS.length; i++) if (!STEPS[i].stat().done) return STEPS[i]; return null; }
 function totals() {
-  var q = function (id) { var t = stageStats(id); return { d: t.right === t.total && t.total > 0 ? 1 : 0, n: 1 }; };
-  var m = q('method'), c = q('checklist');
-  return { done: m.d + c.d + drillsDone() + problemsDone(), total: m.n + c.n + DRILLS.length + BANK.length };
+  var t = stageStats('checklist');
+  return { done: (t.total > 0 && t.right === t.total ? 1 : 0) + problemsDone(), total: 1 + BANK.length };
 }
 
 function stepCard(st, i, isNext) {
@@ -5918,15 +5899,15 @@ function stepCard(st, i, isNext) {
 function mountHub() {
   var tt = totals(), nx = nextStep(), started = tt.done > 0;
   var head = h('section', { class: 'lm-head' }, [
-    h('p', { class: 'kicker', text: 'Lab 2' }),
-    h('h1', { tabindex: '-1', text: 'LP Formulation Practice' }),
-    h('p', { text: 'Learn to turn a word problem into a linear program. Four steps: the method, short drills, full practice problems and a mistake-spotting quiz. The checker tells you what is missing and gives hints.' }),
-    h('div', { class: 'prog-line' }, [HOST.meterBar(tt.total ? tt.done / tt.total : 0), h('span', { text: tt.done + ' of ' + tt.total + ' activities done' })]),
-    h('div', { class: 'cta' }, [h('a', { class: 'se-btn gold', href: '#' + (nx ? nx.route : 'lab2-problems') }, [nx ? (started ? 'Continue with ' + nx.title : 'Start with the method') : 'Review the problems', HOST.icon('right')])])
+    h('p', { class: 'kicker', text: 'Module 2' }),
+    h('h1', { tabindex: '-1', text: PRACTICE.title }),
+    h('p', { text: 'Practise turning word problems into LP models, then test your eye for common mistakes. The checker tells you what is missing and gives hints.' }),
+    h('div', { class: 'prog-line' }, [HOST.meterBar(tt.total ? tt.done / tt.total : 0), h('span', { text: tt.done + ' of ' + tt.total + ' done' })]),
+    h('div', { class: 'cta' }, [h('a', { class: 'se-btn gold', href: '#' + (nx ? nx.route : 'lab2-problems') }, [nx ? (started ? 'Continue with ' + nx.title : 'Start with the practice problems') : 'Review the problems', HOST.icon('right')])])
   ]);
   var path = h('section', { class: 'part l2part' }, [
-    h('h2', null, [h('small', { text: 'Your path' }), 'Four steps']),
-    h('p', { text: 'Do them in order if you are new. If you already know the basics, go straight to the problems.' }),
+    h('h2', null, [h('small', { text: 'Your path' }), 'Two steps']),
+    h('p', null, ['Start with the problems, then test your eye on the mistake-spotting quiz. New to formulation? Do Part A of the ', h('a', { href: '#' + LEARN.route }, LEARN.title), ' first.']),
     h('ol', { class: 'lcards' }, STEPS.map(function (st, i) { return stepCard(st, i, nx === st); }))
   ]);
   var how = h('div', { class: 'card hubnote' }, [
@@ -5935,17 +5916,21 @@ function mountHub() {
     h('p', { class: 'small muted', text: 'Stuck? Each missing row has three hints: a nudge, the shape of the row, and the row itself.' })
   ]);
   var side = h('div', { class: 'sidecards' }, [
-    h('a', { class: 'sidecard', href: '#lab1' }, [h('b', { text: 'Lab 1: Graphical Method and Sensitivity Analysis' }), h('span', { text: 'New to ORM? Start there: the graphical method and the Solver report.' })]),
+    h('a', { class: 'sidecard', href: '#' + LEARN.route }, [h('b', { text: LEARN.title }), h('span', { text: 'New to ORM? Start there: formulation, the 4-move method, warm-up drills, the graphical method and the Solver report.' })]),
     h('a', { class: 'sidecard', href: '#words' }, [h('b', { text: 'Glossary' }), h('span', { text: 'Every ORM term in one simple line. Handy before the exam.' })])
   ]);
-  return h('div', { class: 'l2' }, [HOST.crumbs([{ href: 'home', label: 'Home' }, { label: 'LP Formulation Practice' }]), h('div', { style: 'height:12px' }), head, path, how, side]);
+  return h('div', { class: 'l2' }, [HOST.crumbs([{ href: 'home', label: 'Home' }, { label: PRACTICE.title }]), h('div', { style: 'height:12px' }), head, path, how, side]);
 }
 
 /* every step page gets crumbs on top */
 function framed(step, node) {
-  return h('div', { class: 'l2' }, [HOST.crumbs([{ href: 'home', label: 'Home' }, { href: 'lab2', label: 'LP Formulation Practice' }, { label: step.title }]), h('div', { style: 'height:12px' }), node]);
+  return h('div', { class: 'l2' }, [HOST.crumbs([{ href: 'home', label: 'Home' }, { href: PRACTICE.route, label: PRACTICE.title }, { label: step.title }]), h('div', { style: 'height:12px' }), node]);
 }
-var MINI_RE = /^-(method|checklist)((?:-(?:\d+|check))?)$/;
+/* the same for a Part A page, which sits under the Learning Module */
+function framedLearn(title, node) {
+  return h('div', { class: 'l2' }, [HOST.crumbs([{ href: 'home', label: 'Home' }, { href: LEARN.route, label: LEARN.title }, { label: title }]), h('div', { style: 'height:12px' }), node]);
+}
+var MINI_RE = /^-(checklist)((?:-(?:\d+|check))?)$/;
 
 /* ---------- what the series shell sees ---------- */
 var onProgressShell = null;
@@ -5968,18 +5953,19 @@ function mountSub(sub) {
 var API = {
   id: 'lab2',
   mount: mountSub,
-  progress: function () { var t = totals(); return { done: t.done, total: t.total, unit: 'activities done' }; },
+  partA: PART_A,
+  progress: function () { var t = totals(); return { done: t.done, total: t.total, unit: 'done' }; },
   setOnProgress: function (fn) { onProgressShell = fn; },
   setHost: function (o) { for (var k in o) HOST[k] = o[k]; },
   reset: function () {
     store.q = {}; store.p = {}; store.d = {}; store.draft = {}; saveStore();
-    FILTER.type = 'All'; FILTER.src = 'All'; FILTER.q = ''; DRILL_CAT = null;
+    FILTER.type = 'All'; FILTER.src = 'All'; FILTER.status = 'All'; FILTER.q = ''; DRILL_CAT = null;
   },
   labelFor: function (route) {
     var m = /^lab2-p-(.+)$/.exec(route || '');
-    if (m) { var p = problemById(m[1]); return p ? 'LP Formulation Practice: ' + p.title : 'LP Formulation Practice'; }
-    var mm = /^lab2-(method|checklist)/.exec(route || ''), st = mm ? stepById(mm[1]) : stepByRoute(route);
-    return st ? 'LP Formulation Practice: ' + st.title : 'LP Formulation Practice';
+    if (m) { var p = problemById(m[1]); return p ? PRACTICE.title + ': ' + p.title : PRACTICE.title; }
+    var mm = /^lab2-(checklist)/.exec(route || ''), st = mm ? stepById(mm[1]) : stepByRoute(route);
+    return st ? PRACTICE.title + ': ' + st.title : PRACTICE.title;
   },
   countProblems: function () { return BANK.length; },
   counts: function () { return { problems: BANK.length, drills: DRILLS.length, topics: DRILL_CATS.length, numbered: BANK.filter(isNumbered).length }; }
@@ -6527,11 +6513,24 @@ function meterBar(r) {
   return h('div', { class: 'meter-bar', role: 'progressbar', 'aria-valuemin': '0', 'aria-valuemax': '100', 'aria-valuenow': String(pct), 'aria-label': 'Progress' }, h('span', { style: 'width:' + pct + '%' }));
 }
 function extOf(lab) { return lab.kind === 'external' ? lab.ext() : null; }
+/* Part A of the Learning Module holds extra pages next to Lesson 1 (the 4-move method, the warm-up drills). They are not numbered lessons: the lab fills lab.extras
+   with { id, route, title, goal, mins, what, icon, count, optional, done(), chip(), mount(sub) } and a part lists their ids in part.extras. */
+function extraOf(lab, id) { var xs = lab.extras || []; for (var i = 0; i < xs.length; i++) if (xs[i].id === id) return xs[i]; return null; }
+function partExtras(lab, part) { return (part.extras || []).map(function (id) { return extraOf(lab, id); }).filter(Boolean); }
+function labItems(lab) {   // lessons and extras in reading order: { ls } or { ex }
+  var out = [];
+  lab.parts.forEach(function (part) {
+    partLessons(lab, part).forEach(function (n) { out.push({ ls: lessonOf(lab, n) }); });
+    partExtras(lab, part).forEach(function (ex) { out.push({ ex: ex }); });
+  });
+  return out;
+}
 function labStatus(lab) {
   if (lab.kind === 'external') { var p = extOf(lab).progress(); return { done: p.done, total: p.total, next: null, unit: p.unit || 'done' }; }
-  var done = 0, next = null;
-  lab.lessons.forEach(function (ls) { if (lessonDone(ls)) done++; else if (!next) next = ls; });
-  return { done: done, total: lab.lessons.length, next: next, unit: 'lessons done' };
+  var done = 0, next = null, items = labItems(lab);
+  // an optional extra (the drills) counts towards the total but is never the page we send people to next
+  items.forEach(function (it) { if (it.ls ? lessonDone(it.ls) : it.ex.done()) done++; else if (!next && !(it.ex && it.ex.optional)) next = it.ls || it.ex; });
+  return { done: done, total: items.length, next: next, unit: 'done' };
 }
 function labRatio(lab) { var st = labStatus(lab); return ratioOf(st.done, st.total); }
 function seriesRatio() {
@@ -6542,12 +6541,14 @@ function seriesRatio() {
 function lessonOf(lab, n) { return lab.lessons[n - 1] || null; }
 function partLessons(lab, part) { return part.lessons.filter(function (n) { return !!lessonOf(lab, n); }); }
 function lessonRoute(lab, n, sub) { return lab.id + '-l' + n + (sub ? '-' + sub : ''); }
-function lessonMins(lab) { return lab.lessons.reduce(function (a, l) { return a + l.mins; }, 0); }
+function lessonMins(lab) { return lab.lessons.reduce(function (a, l) { return a + l.mins; }, 0) + (lab.extras || []).reduce(function (a, x) { return a + (x.mins || 0); }, 0); }
+/* the method and the drills used to live in the second lab; old links and saved places still point there */
+function canonRoute(r) { return String(r || '').replace(/^lab2-(method|drills)(?=$|-)/, 'lab1-$1'); }
 function minsText(m) { if (m < 60) return m + ' min'; var hr = Math.floor(m / 60), mm = m % 60; return hr + ' h' + (mm ? ' ' + mm + ' min' : ''); }
 function labByRoute(raw) { var m = /^(lab\d+)/.exec(raw); return m && LABS[m[1]] ? LABS[m[1]] : null; }
 function setTopBar(r) { var b = $('#top-bar'); if (b) b.style.width = Math.round(Math.max(0, Math.min(1, r)) * 100) + '%'; }
 function continueRoute() {
-  var r = store.last;
+  var r = canonRoute(store.last);
   if (!r) return null;
   var lab = labByRoute(r);
   return lab ? r : null;
@@ -6557,6 +6558,8 @@ function routeLabel(r) {
   if (!lab) return '';
   var m = /^lab\d+-l(\d+)/.exec(r);
   if (m && lab.lessons) { var ls = lessonOf(lab, +m[1]); return ls ? 'Lesson ' + m[1] + ': ' + ls.title : ''; }
+  var xm = /^lab\d+-([a-z]+)/.exec(r), ex = xm ? extraOf(lab, xm[1]) : null;
+  if (ex) return ex.title;
   if (lab.kind === 'external') { var e = extOf(lab); return e.labelFor ? e.labelFor(r) : lab.title; }
   return lab.title;
 }
@@ -6566,7 +6569,7 @@ function outlineLinks(lab, active) {
   var wrap = h('div', { class: 'ol' });
   if (lab.kind === 'external') {
     var ext = extOf(lab);
-    wrap.appendChild(h('p', { class: 'ol-part', text: 'In this lab' }));
+    wrap.appendChild(h('p', { class: 'ol-part', text: 'In this module' }));
     wrap.appendChild(h('ul', { class: 'ol-list' }, ext.sections.map(function (sec, i) {
       var cur = active === sec.route || (sec.also && sec.also.indexOf(active) >= 0);
       return h('li', null, A(sec.route, sec.done ? 'done' : '', [h('span', { class: 'ol-n' }, sec.done ? icon('check') : String(i + 1)), sec.label], cur ? { 'aria-current': 'page' } : null));
@@ -6574,10 +6577,14 @@ function outlineLinks(lab, active) {
   } else {
     lab.parts.forEach(function (part) {
       wrap.appendChild(h('p', { class: 'ol-part', text: 'Part ' + part.id + ' · ' + part.title }));
-      wrap.appendChild(h('ul', { class: 'ol-list' }, partLessons(lab, part).map(function (n) {
+      var rows = partLessons(lab, part).map(function (n) {
         var ls = lessonOf(lab, n), done = lessonDone(ls), cur = active === 'l' + n;
         return h('li', null, A(lessonRoute(lab, n, 's1'), done ? 'done' : '', [h('span', { class: 'ol-n' }, done ? icon('check') : String(n)), ls.title], cur ? { 'aria-current': 'page' } : null));
-      })));
+      }).concat(partExtras(lab, part).map(function (ex) {
+        var done = ex.done(), cur = active === ex.route;
+        return h('li', null, A(ex.route, done ? 'done' : '', [h('span', { class: 'ol-n' }, icon(done ? 'check' : ex.icon || 'steps')), ex.title], cur ? { 'aria-current': 'page' } : null));
+      }));
+      wrap.appendChild(h('ul', { class: 'ol-list' }, rows));
     });
   }
   var extras = [];
@@ -6589,7 +6596,7 @@ function outlineLinks(lab, active) {
 function outlineAside(lab, active) {
   var st = labStatus(lab);
   return h('aside', { class: 'outline', 'aria-label': lab.title + ' contents' }, [
-    h('p', { class: 'ol-title', text: 'Lab ' + lab.num }),
+    h('p', { class: 'ol-title', text: 'Module ' + lab.num }),
     h('div', { class: 'ol-lab' }, A(lab.id, '', lab.title, { style: 'color:inherit;text-decoration:none' })),
     h('div', { class: 'prog-line' }, [meterBar(labRatio(lab)), h('span', { text: st.done + ' of ' + st.total })]),
     outlineLinks(lab, active)
@@ -6637,14 +6644,14 @@ function mountHome() {
     ].map(function (t) { return h('li', null, [h('span', { class: 'ic' }, icon(t[0])), h('b', { text: t[1] }), h('span', { text: t[2] })]); }))
   ]);
   var cards = h('section', { class: 'se-sec' }, [
-    h('h2', { text: 'Pick a lab' }),
-    h('p', { class: 'lead', text: 'Do them in order if you are new. Each lab works on its own too.' }),
+    h('h2', { text: 'Pick a module' }),
+    h('p', { class: 'lead', text: 'Do them in order if you are new. Each module works on its own too.' }),
     h('div', { class: 'labcards' }, labs.map(function (lab) {
       var st = labStatus(lab), isExt = lab.kind === 'external';
       var go = isExt ? (st.done ? 'Open' : 'Start') : (st.done >= st.total ? 'Review' : st.done ? 'Continue' : 'Start');
       var chips = lab.chips ? lab.chips() : [];
       return h('a', { class: 'labcard', href: '#' + lab.id }, [
-        h('span', { class: 'tag', text: 'LAB ' + lab.num }),
+        h('span', { class: 'tag', text: 'MODULE ' + lab.num }),
         h('h3', { text: lab.title }),
         h('p', { text: lab.tagline }),
         h('div', { class: 'chips' }, chips.map(function (c) { return h('span', { class: 'se-chip' }, [c.icon ? icon(c.icon) : null, c.text]); })),
@@ -6654,7 +6661,7 @@ function mountHome() {
     }))
   ]);
   var start = h('section', { class: 'se-sec' }, h('div', { class: 'startbox' }, [
-    h('b', { text: 'New to ORM? Start with Lab 1, Lesson 1.' }),
+    h('b', { text: 'New to ORM? Start with the Learning Module, Lesson 1.' }),
     h('p', { html: rich('It takes about 7 minutes. If you see an underlined word, like [[constraint]], tap it. A small box explains it in one line.') })
   ]));
   return h('div', null, [hero, h('div', { class: 'wrap se-page' }, [how, cards, start])]);
@@ -6677,20 +6684,40 @@ function lessonCard(lab, ls, isNext) {
     h('div', { class: 'go' }, [isNext ? h('span', { class: 'se-chip gold', text: done ? 'Review' : 'Up next' }) : null, icon('chev', 'arrow')])
   ]));
 }
+/* a Part A page that is not a numbered lesson: a card like a lesson's, with an icon where the number would be */
+function extraCard(lab, ex, isNext) {
+  var done = ex.done();
+  return h('li', null, A(ex.route, 'lcard extra' + (done ? ' done' : '') + (isNext ? ' next' : ''), [
+    h('span', { class: 'num' }, icon(done ? 'check' : ex.icon || 'steps')),
+    h('div', null, [
+      h('h3', { text: ex.title }),
+      h('p', { text: ex.goal }),
+      h('div', { class: 'meta' }, [
+        h('span', null, [icon('clock'), ex.mins + ' min']),
+        h('span', null, [icon('steps'), ex.what]),
+        h('span', { class: 'se-chip' + (done ? ' good' : '') }, [done ? icon('check') : null, ex.chip()])
+      ])
+    ]),
+    h('div', { class: 'go' }, [isNext ? h('span', { class: 'se-chip gold', text: done ? 'Review' : 'Up next' }) : null, icon('chev', 'arrow')])
+  ]));
+}
 function mountMap(lab) {
-  var st = labStatus(lab), next = st.next || lab.lessons[0];
+  var st = labStatus(lab), nx = st.next;
+  var cta = st.done === 0 || !nx ? { route: lessonRoute(lab, 1, 's1'), label: st.done === 0 ? 'Start Lesson 1' : 'Review Lesson 1' }
+    : nx.n ? { route: lessonRoute(lab, nx.n, 's1'), label: 'Continue with Lesson ' + nx.n } : { route: nx.route, label: 'Continue with ' + nx.title };
   var head = h('section', { class: 'lm-head' }, [
-    h('p', { class: 'kicker', text: 'Lab ' + lab.num }),
+    h('p', { class: 'kicker', text: 'Module ' + lab.num }),
     h('h1', { tabindex: '-1', text: lab.title }),
     h('p', { text: lab.blurb }),
-    h('div', { class: 'prog-line' }, [meterBar(labRatio(lab)), h('span', { text: st.done + ' of ' + st.total + ' lessons done · about ' + minsText(lessonMins(lab)) })]),
-    h('div', { class: 'cta' }, [A(lessonRoute(lab, next.n, 's1'), 'se-btn gold', [st.done === 0 ? 'Start Lesson 1' : st.next ? 'Continue with Lesson ' + next.n : 'Review Lesson 1', icon('right')])])
+    h('div', { class: 'prog-line' }, [meterBar(labRatio(lab)), h('span', { text: st.done + ' of ' + st.total + ' done · about ' + minsText(lessonMins(lab)) })]),
+    h('div', { class: 'cta' }, [A(cta.route, 'se-btn gold', [cta.label, icon('right')])])
   ]);
   var parts = h('ol', { class: 'parts' }, lab.parts.map(function (part) {
     return h('li', { class: 'part' }, [
       h('h2', null, [h('small', { text: 'Part ' + part.id }), part.title]),
       h('p', { text: part.blurb }),
-      h('ol', { class: 'lcards' }, partLessons(lab, part).map(function (n) { var ls = lessonOf(lab, n); return lessonCard(lab, ls, st.next === ls); }))
+      h('ol', { class: 'lcards' }, partLessons(lab, part).map(function (n) { var ls = lessonOf(lab, n); return lessonCard(lab, ls, st.next === ls); })
+        .concat(partExtras(lab, part).map(function (ex) { return extraCard(lab, ex, st.next === ex); })))
     ]);
   }));
   var side = h('div', { class: 'sidecards' }, [
@@ -6789,9 +6816,11 @@ function mountCheck(lab, ls) {
 }
 function mountDone(lab, ls) {
   var st = qStats(ls), next = lessonOf(lab, ls.n + 1);
+  var part = lab.parts.filter(function (pt) { return partLessons(lab, pt).slice(-1)[0] === ls.n; })[0], more = part ? partExtras(lab, part)[0] : null;   // the extra that follows this lesson, if any
   var bullets = h('ul', null, ls.recap.map(function (t) { return h('li', null, [icon('check'), h('span', { html: rich(t) })]); }));
   var cta = h('div', { class: 'cta' }, [
-    next ? A(lessonRoute(lab, next.n, 's1'), 'se-btn gold', ['Next: Lesson ' + next.n + ' · ' + next.title, icon('right')]) : (lab.cheat ? A(lab.id + '-cheat', 'se-btn gold', ['Open the revision sheet', icon('sheet')]) : A('home', 'se-btn gold', ['Back to home', icon('home')])),
+    more ? A(more.route, 'se-btn gold', ['Next: ' + more.title, icon('right')]) : next ? A(lessonRoute(lab, next.n, 's1'), 'se-btn gold', ['Next: Lesson ' + next.n + ' · ' + next.title, icon('right')]) : (lab.cheat ? A(lab.id + '-cheat', 'se-btn gold', ['Open the revision sheet', icon('sheet')]) : A('home', 'se-btn gold', ['Back to home', icon('home')])),
+    more && next ? A(lessonRoute(lab, next.n, 's1'), 'se-btn', ['Skip to Lesson ' + next.n]) : null,
     A(lab.id, 'se-btn', ['All lessons']),
     A(lessonRoute(lab, ls.n, 's1'), 'se-btn ghost', ['Read this lesson again'])
   ]);
@@ -6876,7 +6905,7 @@ function fillDrawer() {
   body.appendChild(A('home', 'home-link', [icon('home'), 'Home']));
   LAB_ORDER.forEach(function (id) {
     var lab = LABS[id], st = labStatus(lab), here = curLab === lab;
-    body.appendChild(h('p', { class: 'ol-title', style: 'margin-top:14px', text: 'Lab ' + lab.num }));
+    body.appendChild(h('p', { class: 'ol-title', style: 'margin-top:14px', text: 'Module ' + lab.num }));
     body.appendChild(h('div', { class: 'ol-lab' }, A(lab.id, '', lab.title, { style: 'color:inherit;text-decoration:none' })));
     body.appendChild(h('div', { class: 'prog-line' }, [meterBar(labRatio(lab)), h('span', { text: st.done + ' of ' + st.total })]));
     body.appendChild(outlineLinks(lab, here ? cur.active : ''));
@@ -6914,7 +6943,7 @@ function trapTab(ev, root) {
 
 /* ---------- router ---------- */
 function parseHash() {
-  var raw = (location.hash || '').replace(/^#/, ''), m;
+  var raw = canonRoute((location.hash || '').replace(/^#/, '')), m;
   if (!raw || raw === 'home') return { page: 'home', active: '' };
   if (raw === 'words') return { page: 'words', active: '' };
   var lab = labByRoute(raw);
@@ -6923,6 +6952,7 @@ function parseHash() {
   if (lab.kind === 'external') return { page: 'ext', lab: lab.id, sub: rest, active: raw };
   if (rest === '') return { page: 'map', lab: lab.id, active: 'map' };
   if (rest === '-cheat' && lab.cheat) return { page: 'cheat', lab: lab.id, active: 'cheat' };
+  if ((m = /^-([a-z]+)((?:-(?:\d+|check))?)$/.exec(rest)) && extraOf(lab, m[1])) return { page: 'extra', lab: lab.id, extra: m[1], sub: m[2], active: extraOf(lab, m[1]).route };
   if ((m = /^-l(\d+)(?:-(?:s(\d+)|(check)|(done)))?$/.exec(rest))) {
     var n = +m[1], ls = lessonOf(lab, n);
     if (!ls) return { page: 'map', lab: lab.id, active: 'map' };
@@ -6934,6 +6964,8 @@ function parseHash() {
 function render(first) {
   if (overlayOpen === 'drawer') closeDrawer(true);
   if (overlayOpen === 'sheet') closeSheet(true);
+  var wanted = (location.hash || '').replace(/^#/, ''), canon = canonRoute(wanted);
+  if (canon !== wanted) { try { history.replaceState(null, '', '#' + canon); } catch (e) { location.hash = '#' + canon; return; } }   // an old link: show the page at its new address
   var r = parseHash(), view = clear($('#view')), node, ttl = SERIES, focus = 'h1', ratio = seriesRatio();
   var lab = r.lab ? LABS[r.lab] : null;
   mountedRoute = (location.hash || '#home').replace(/^#/, '') || 'home';
@@ -6945,6 +6977,10 @@ function render(first) {
     var ls = lessonOf(lab, r.n);
     node = mountLesson(lab, ls, r.sub); focus = 'h2'; ratio = labRatio(lab);
     ttl = (r.sub.kind === 'step' ? ls.steps[r.sub.k - 1].title.replace(/<[^>]+>/g, '') : r.sub.kind === 'check' ? 'Quick check' : 'Lesson complete') + ' · Lesson ' + ls.n + ' · ' + lab.title;
+  } else if (r.page === 'extra') {
+    var xe = extraOf(lab, r.extra), mx = xe.mount(r.sub);
+    node = labFrame(lab, r.active, mx.el); ttl = (mx.title ? mx.title + ' · ' : '') + lab.title; focus = 'h2'; ratio = labRatio(lab);
+    store.last = mx.saveRoute || xe.route + r.sub; saveStore();
   } else if (r.page === 'ext') {
     var m = extOf(lab).mount(r.sub);
     node = labFrame(lab, r.active, m.el, m.full); ttl = (m.title ? m.title + ' · ' : '') + lab.title; focus = 'h2'; ratio = labRatio(lab);
@@ -7019,18 +7055,24 @@ function boot() {
   render(true);
 }
 
-/* ===== Lab 1 definition and parts shared by its lessons ===== */
+/* ===== Learning Module (route prefix lab1): its definition and the parts shared by its lessons ===== */
 var L1 = {
-  id: 'lab1', num: 1, title: 'Graphical Method and Sensitivity Analysis', kind: 'lessons',
-  tagline: 'Formulate an LP model, solve it by the graphical method and interpret the Excel Solver sensitivity report.',
-  blurb: 'The Wyndor Glass Co. problem: one factory, two products, three plants. Step by step you will formulate the LP model, solve it by the graphical solution method, and carry out sensitivity analysis with the Excel Solver report.',
+  id: 'lab1', num: 1, title: 'Learning Module', kind: 'lessons',
+  tagline: 'LP formulation, graphical method and sensitivity analysis, taught step by step with a quick quiz after every lesson.',
+  blurb: 'Learn to formulate an LP model, solve it by the graphical method and carry out sensitivity analysis with the Excel Solver report. One example runs through the lessons: the Wyndor Glass Co. problem, with two products and three plants.',
   parts: [
-    { id: 'A', title: 'Problem Formulation', blurb: 'Turn a business situation into a linear programming (LP) model.', lessons: [1] },
+    { id: 'A', title: 'Problem Formulation', blurb: 'Turn a business situation into a linear programming (LP) model. Then learn the four moves that work for any story, and warm up with short drills.', lessons: [1], extras: ['method', 'drills'] },
     { id: 'B', title: 'Graphical Solution Method', blurb: 'Plot the constraints, find the feasible region and the optimal corner point, and recognise the special cases.', lessons: [2, 3, 4] },
     { id: 'C', title: 'Sensitivity Analysis', blurb: 'See how the optimal plan reacts when a profit, a resource or a product changes. Then interpret the Excel Solver report.', lessons: [5, 6, 7, 8, 9] }
   ],
   lessons: [],
-  chips: function () { return [{ icon: 'steps', text: L1.lessons.length + ' lessons' }, { icon: 'clock', text: 'about ' + minsText(lessonMins(L1)) }, { icon: 'quiz', text: 'Quick quiz after every lesson' }]; }
+  extras: [],   // the 4-move method and the warm-up drills: handed over by the formulation pages (js/lab2bridge)
+  chips: function () {
+    var c = [{ icon: 'steps', text: L1.lessons.length + ' lessons' }];
+    L1.extras.forEach(function (x) { if (x.count) c.push({ icon: x.icon, text: x.count }); });
+    c.push({ icon: 'clock', text: 'about ' + minsText(lessonMins(L1)) });
+    return c;
+  }
 };
 function addLesson(def) { def.n = L1.lessons.length + 1; def.id = 'l' + def.n; L1.lessons.push(def); return def; }
 LABS.lab1 = L1; LAB_ORDER.push('lab1');
@@ -7149,7 +7191,7 @@ addLesson({
         ],
         tips: [{ kind: 'desi', label: 'Think of a tiffin centre', html: 'A tiffin centre makes roti boxes and paratha boxes. The tawa, the gas and the cook’s time are limited, and each box earns a different profit. How many of each should it make today? Wyndor has the same problem, only in a factory.' }],
         see: h('div', { class: 'sec' }, [d.el, h('p', { class: 'small muted', text: 'Read it row by row. Plant 3 uses 3 hours for each door and 2 hours for each window, and it has 18 hours a week.' })]),
-        more: [{ title: 'Why this example?', html: 'Wyndor Glass is the classic first example in linear programming: two products, three plants and a clean picture. The same numbers are used in every lesson of this lab, so each new idea sits on the same problem.' }]
+        more: [{ title: 'Why this example?', html: 'Wyndor Glass is the classic first example in linear programming: two products, three plants and a clean picture. The same numbers are used in every lesson of this module, so each new idea sits on the same problem.' }]
       };
     } },
     { title: 'Decision variables', build: function () {
@@ -9408,18 +9450,27 @@ L1.cheat = {
   }
 };
 
-/* ===== Lab 2 (LP Formulation Practice): registered with the shell. The lab itself lives in window.SE_LAB2 (built from lab2int/). ===== */
+/* ===== Practice Module (route prefix lab2): registered with the shell. The pages live in window.SE_LAB2 (built from lab2int/).
+   The same file also hands two of those pages, the 4-move method and the warm-up drills, to Part A of the Learning Module. ===== */
 (function () {
   var X = window.SE_LAB2;
   if (!X) return;
-  X.setHost({ crumbs: crumbs, rich: rich, icon: icon, meterBar: meterBar });
+  X.setHost({
+    crumbs: crumbs, rich: rich, icon: icon, meterBar: meterBar,
+    // where the warm-up drills lead on to: the next lesson of the Learning Module
+    afterDrills: function () {
+      var ls = lessonOf(L1, 2);
+      return ls ? { route: lessonRoute(L1, 2, 's1'), label: 'Lesson 2: ' + ls.title } : { route: L1.id, label: L1.title };
+    }
+  });
+  L1.extras = X.partA;
   LABS.lab2 = {
-    id: 'lab2', num: 2, title: 'LP Formulation Practice', kind: 'external',
-    tagline: 'Turn word problems into LP models. Learn four moves, warm up with short drills, then practise.',
-    blurb: 'Learn to write a linear program from a story. A checker marks your model and gives hints.',
+    id: 'lab2', num: 2, title: 'Practice Module', kind: 'external',
+    tagline: 'Practice problems and spot the mistake. Type your own LP model and get instant, row-by-row feedback.',
+    blurb: 'Practise writing a linear program from a story. A checker marks your model and gives hints.',
     ext: function () { return X; },
     countProblems: function () { return X.countProblems(); },
-    chips: function () { var c = X.counts(); return [{ icon: 'steps', text: c.drills + ' drills' }, { icon: 'quiz', text: c.problems + ' problems' }, { icon: 'tap', text: 'Instant checker' }]; }
+    chips: function () { var c = X.counts(); return [{ icon: 'quiz', text: c.problems + ' practice problems' }, { icon: 'eye', text: 'Spot the mistake' }, { icon: 'tap', text: 'Instant checker' }]; }
   };
   LAB_ORDER.push('lab2');
 })();
